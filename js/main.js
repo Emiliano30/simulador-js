@@ -1,7 +1,21 @@
 
+// email: emi@gmail.com
+// contraseña: 123456
+
+
+
+
+
+
+
 //Base de datos
 const DB = {
-        usuarios: [],
+        usuarios: [
+            {id: 1, 
+            nombre: "Emiliano Fioquetti", 
+            email: "emi@gmail.com", 
+            contraseña: "123456"}
+        ],
         reservas: [],
         medicos: [
             {
