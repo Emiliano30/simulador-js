@@ -1,0 +1,38 @@
+
+
+ <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <title>Login - Portal Médico</title>
+</head>
+<body class="auth-page">
+    <div class="auth-card animate__animated animate__zoomIn">
+        <h2>Bienvenido</h2>
+        <p>Inicie sesión para gestionar sus turnos</p>
+        
+        <form id="loginForm" class="auth-form">
+            <div class="input-group">
+                <input id="email" type="email" placeholder="Correo electrónico" required>
+            </div>
+            <div class="input-group">
+                <input id="password" type="password" placeholder="Contraseña" required>
+            </div>
+            <button type="submit" class="btn-full">Ingresar al Sistema</button>
+        </form>
+
+        <p id="error" class="error-msg" style="display:none;">Los datos de acceso son incorrectos</p>
+
+        <div class="auth-footer">
+            <span>¿Es nuevo paciente?</span>
+            <a href="register.html">Regístrese aquí</a>
+        </div>
+    </div>
+
+    <script src="./js/core.js"></script>
+    <script src="./js/login.js"></script>
+</body>
+</html>

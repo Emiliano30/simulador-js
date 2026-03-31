@@ -1,13 +1,39 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <title>Panel de Turnos Médicos</title>
 </head>
 <body>
-    <h1>Bienvenido al simulador</h1>
-    <p>Este es un simple simulador de ejemplo de sacar turno para un servicio medico.</p>
-    <script src="./js/main.js"></script>
+    <div class="dashboard-container">
+        <header class="main-header animate__animated animate__fadeInDown">
+            <h1>Bienvenido <span id="userName"></span></h1>
+            <button id="btnLogout" class="btn-secondary">Cerrar sesión</button>
+        </header>
+
+        <main class="content">
+            <aside class="menu-actions animate__animated animate__fadeInLeft">
+                <h2>Menú de navegación</h2>
+                <div class="button-group">
+                    <button id="btnVer" class="btn-primary">Ver mis reservas</button>
+                    <button id="btnReservar" class="btn-primary">Solicitar nueva reserva</button>
+                </div>
+            </aside>
+
+            <section class="display-area animate__animated animate__fadeInUp">
+                <div id="resultado" class="card-result">
+                    <p class="placeholder-text">Por favor, seleccione una acción del menú lateral para comenzar.</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="./js/core.js"></script>
+    <script src="./js/app.js"></script>
 </body>
 </html>
+
