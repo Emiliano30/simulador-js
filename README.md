@@ -6,13 +6,13 @@ Este proyecto consiste en un **Simulador Interactivo de Turnos Médicos** desarr
 
 **IMPORTANTE:** El proyecto está preparado para trabajar tanto con archivos locales como con una API externa en **npoint**.
 
-Si desea probar el proyecto utilizando la base de datos remota en lugar de los archivos locales, debe realizar los siguientes cambios en el archivo `js/app.js`:
+Si desea probar el proyecto utilizando la base de datos local en lugar de los archivos remotos, debe realizar los siguientes cambios en el archivo `js/app.js`:
 
-1. **Médicos (Línea 19):** Cambiar: `../data/medicos.json`
-   Por: `https://api.npoint.io/7f60b9b215db1d2758b9`
+1. **Médicos (Línea 19):** Cambiar: `https://api.npoint.io/7f60b9b215db1d2758b9`
+   Por: `../data/medicos.json`
 
-2. **Turnos (Línea 45):** Cambiar: `../data/turnos.json`
-   Por: `https://api.npoint.io/b3fbea70a626a9de9ec0`
+2. **Turnos (Línea 45):** Cambiar: `https://api.npoint.io/b3fbea70a626a9de9ec0`
+   Por: `../data/turnos.json`
 
 ---
 
