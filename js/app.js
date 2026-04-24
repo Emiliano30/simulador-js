@@ -1,15 +1,36 @@
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 1500,
+  timerProgressBar: true,
+});
+
+
 
 
 //Cargar datos desde APIs
 
 async function obtenerMedicosAPI() {
     try{
-        const response = await fetch("https://api.npoint.io/7f60b9b215db1d2758b9",{
+        // const response = await fetch("https://api.npoint.io/7f60b9b215db1d2758b9",{
+        //     cache: "no-cache"
+        // });
+        const response = await fetch("../data/medicos.json",{
             cache: "no-cache"
         });
         const data = await response.json();
+        Toast.fire({
+            icon: 'success',
+            title: 'Datos cargados correctamente'
+        });
+        
         return data;
     } catch (error) {
+        Toast.fire({
+            icon: 'error',
+            title: 'Error al cargar datos'
+        });
         console.error("Error al cargar datos:", error);
         return [];
     }
@@ -18,7 +39,10 @@ async function obtenerMedicosAPI() {
 
 async function obtenerTurnosAPI(){
     try{
-        const response = await fetch("https://api.npoint.io/b3fbea70a626a9de9ec0",{
+        // const response = await fetch("https://api.npoint.io/b3fbea70a626a9de9ec0",{
+        //     cache: "no-cache"
+        // });
+        const response = await fetch("../data/turnos.json",{
             cache: "no-cache"
         });
         const data = await response.json();
@@ -39,7 +63,6 @@ const usuarioActual = JSON.parse(localStorage.getItem("usuarioActual"));
 if(!usuarioActual){
     window.location.href = "login.html";
 }
-
 
 
 //Inicializar sistema
@@ -167,23 +190,25 @@ function crearReserva(turno){
     const ok = sistema.crearReserva(usuarioActual.id, turno);
 
     if(!ok){
-        renderTexto(`<p>Maximo 3 reservas por usuario</p>`);
-        const btn = crearBoton("Volver", ()=>{
-            renderMedicos();
+        Swal.fire({
+            icon: 'warning',
+            title: 'Límite de reservas',
+            text: 'Solo puedes tener 3 reservas activas a la vez.',
+            confirmButtonColor: '#0ea5e9'
         });
-        DOM.resultadoDiv.appendChild(btn);
         return;
     }
 
     localStorage.setItem("reservas", JSON.stringify(sistema.reservas));
     localStorage.setItem("turnos", JSON.stringify(sistema.turnos));
-    renderTexto(`<p>Reserva creada correctamente</p>`);
-
-    const btn = crearBoton("Volver a reservar", ()=>{
-        renderMedicos();
+    Swal.fire({
+        icon: 'success',
+        title: '¡Reserva Confirmada!',
+        text: `Turno agendado para el ${turno.fecha} a las ${turno.hora}`,
+        confirmButtonColor: '#0ea5e9'
+    }).then(() => {
+        renderMedicos(); 
     });
-
-    DOM.resultadoDiv.appendChild(btn);
 }
 
 
@@ -199,7 +224,9 @@ function renderTurnos(medico) {
         slotsDiv.className = "slots-container animate__animated animate__fadeIn";
 
         turnos.forEach(turno => {
-            const btnTurno = crearBoton(`${turno.fecha} - ${turno.hora}`, () => {
+            const fechaLoxun = luxon.DateTime.fromISO(turno.fecha).setLocale('es-AR');
+            const fechaFormateada = fechaLoxun.toFormat('cccc, dd LLL');
+            const btnTurno = crearBoton(`${fechaFormateada} - ${turno.hora} hs`, () => {
                 crearReserva(turno);
             });
             btnTurno.className = "slot-button";
@@ -251,34 +278,56 @@ DOM.btnReservar.addEventListener("click", ()=>{
 
 
 //cancelar
-function cancelarReserva(reservaId){
-    const ok = sistema.cancelarReserva(reservaId);
-    if(!ok){
-        renderTexto(`<p>Error al cancelar la reserva</p>`);
-        return;
-    }
-    localStorage.setItem("reservas", JSON.stringify(sistema.reservas));
-    localStorage.setItem("turnos", JSON.stringify(sistema.turnos));
+function cancelarReserva(reservaId) {
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: "Esta acción no se puede deshacer.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#ef4444',
+        cancelButtonColor: '#64748b',
+        confirmButtonText: 'Sí, cancelar turno',
+        cancelButtonText: 'Volver'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const ok = sistema.cancelarReserva(reservaId);
+            if (ok) {
+                localStorage.setItem("reservas", JSON.stringify(sistema.reservas));
+                localStorage.setItem("turnos", JSON.stringify(sistema.turnos));
+                
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Reserva eliminada'
+                });
 
-    renderTexto(`<p>Reserva cancelada correctamente</p>`);
-
-    setTimeout(() => {
-        DOM.btnVer.click();
-    }, 1000);
-    
+                DOM.btnVer.click();
+            }
+        }
+    });
 }
+
 
 //Modificar
 function modificarReserva(reservaId,nuevoTurno){
     const ok = sistema.modificarReserva(reservaId,nuevoTurno);
     if(!ok){
-        renderTexto(`<p>Error al modificar la reserva</p>`);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error al modificar reserva',
+            text: 'El turno seleccionado no está disponible.',
+            confirmButtonColor: '#0ea5e9'
+        });
         return;
     }
     localStorage.setItem("reservas", JSON.stringify(sistema.reservas));
     localStorage.setItem("turnos", JSON.stringify(sistema.turnos));
 
-    renderTexto(`<p>Reserva modificada correctamente</p>`);
+    Swal.fire({
+        icon: 'success',
+        title: '¡Reserva Modificada!',
+        text: `Nuevo turno para el ${nuevoTurno.fecha} a las ${nuevoTurno.hora}`,
+        confirmButtonColor: '#0ea5e9'
+    });
 
     setTimeout(() => {
         DOM.btnVer.click();
@@ -306,7 +355,10 @@ function renderModificarReserva(reserva){
     }
 
     turnos.forEach(turno => {
-        const btn = crearBoton(`${turno.fecha} - ${turno.hora}`, ()=>{
+        const fechaLuxon = luxon.DateTime.fromISO(turno.fecha).setLocale('es-AR');
+        const fechaFormateada = fechaLuxon.toFormat('cccc, dd LLL');
+
+        const btn = crearBoton(`${fechaFormateada} - ${turno.hora} hs`, ()=>{
             modificarReserva(reserva.id,turno);
         });
         DOM.resultadoDiv.appendChild(btn);
@@ -317,7 +369,14 @@ function renderModificarReserva(reserva){
 
 // Logout
 DOM.btnLogout.addEventListener("click", ()=>{
+    Toast.fire({
+        icon: 'info',
+        title: 'Cerrando sesión',
+        text: 'Hasta luego, ' + usuarioActual.nombre
+    });
+    setTimeout(() => { 
     localStorage.removeItem("usuarioActual");
     window.location.href = "login.html";
+    }, 1500);
 })
 

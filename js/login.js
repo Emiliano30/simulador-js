@@ -1,5 +1,12 @@
 const sistema = new SistemaService(DB);
 
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 1500,
+  timerProgressBar: true,
+});
 
 
 const form = document.getElementById("loginForm");
@@ -15,8 +22,18 @@ form.addEventListener("submit", (e) => {
 
     if(usuario){
         localStorage.setItem("usuarioActual", JSON.stringify(usuario));
-        window.location.href = "index.html";
+        Toast.fire({
+            icon: 'success',
+            title: '¡Bienvenido!'
+        });
+
+        setTimeout(() => {
+            window.location.href = "index.html";
+        }, 1500);
     }else{
-        errorElement.style.display = "block";
+        Toast.fire({
+            icon: 'error',
+            title: 'Datos de acceso incorrectos'
+        });
     }
 })

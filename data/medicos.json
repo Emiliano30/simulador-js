@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "nombre": "Dr. Juan Pérez",
+        "especialidad": "Cardiología",
+        "consultorio": "101"
+    },
+    {
+        "id": 2,
+        "nombre": "Dra. María García",
+        "especialidad": "Neurología",
+        "consultorio": "102"
+    },
+    {
+        "id": 3,
+        "nombre": "Dr. Carlos López",
+        "especialidad": "Pediatría",
+        "consultorio": "103"
+    }
+]

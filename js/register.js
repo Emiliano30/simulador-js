@@ -1,3 +1,11 @@
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 2500,
+  timerProgressBar: true,
+});
+
 
 const sistema = new SistemaService(DB);
 
@@ -19,12 +27,14 @@ form.addEventListener("submit", (e) => {
     const passwordError = validarPassword(password);
 
     if(nombreError || emailError || passwordError) {
+
         mensajeElement.style.display = "block";
         mensajeElement.textContent = nombreError || emailError || passwordError;
         return;
     }
 
     if(sistema.usuarioExiste(email)){
+
         mensajeElement.style.display = "block";
         mensajeElement.textContent = "El usuario ya existe";
         return;
@@ -34,6 +44,7 @@ form.addEventListener("submit", (e) => {
 
     if(usuario){
         localStorage.setItem("usuarios", JSON.stringify(sistema.usuarios));
+
         mensajeElement.style.display = "block";
         mensajeElement.textContent = "Usuario creado correctamente";
     }
