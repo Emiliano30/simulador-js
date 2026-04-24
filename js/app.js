@@ -13,7 +13,7 @@ const Toast = Swal.mixin({
 
 async function obtenerMedicosAPI() {
     try{
-        const response = await fetch("https://api.npoint.io/7f60b9b215db1d2758b9",{
+        const response = await fetch("./data/medicos.json",{
             cache: "no-cache"
         });
         const data = await response.json();
@@ -36,7 +36,7 @@ async function obtenerMedicosAPI() {
 
 async function obtenerTurnosAPI(){
     try{
-        const response = await fetch("https://api.npoint.io/b3fbea70a626a9de9ec0",{
+        const response = await fetch("./data/turnos.json",{
             cache: "no-cache"
         });
         const data = await response.json();
