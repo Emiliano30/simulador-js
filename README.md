@@ -2,6 +2,10 @@
 
 Este proyecto consiste en un **Simulador Interactivo de Turnos Médicos** desarrollado para la diplomatura de JavaScript. La aplicación permite gestionar el flujo completo de un paciente, desde su registro hasta la confirmación y modificación de citas médicas, priorizando la experiencia de usuario (UX) y la persistencia de datos.
 
+## 🔐 Credenciales de Acceso (Prueba Rápida)
+Para facilitar la corrección y cumplir con las sugerencias de la consigna de evitar registros manuales, se ha precargado una cuenta de prueba:
+- **Usuario:** `emi@gmail.com`
+- **Contraseña:** `123456`
 
 ## 🚀 Funcionalidades Principales
 
