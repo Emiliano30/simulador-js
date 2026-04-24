@@ -2,19 +2,6 @@
 
 Este proyecto consiste en un **Simulador Interactivo de Turnos Médicos** desarrollado para la diplomatura de JavaScript. La aplicación permite gestionar el flujo completo de un paciente, desde su registro hasta la confirmación y modificación de citas médicas, priorizando la experiencia de usuario (UX) y la persistencia de datos.
 
-## ⚠️ Configuración de la Base de Datos (npoint API)
-
-**IMPORTANTE:** El proyecto está preparado para trabajar tanto con archivos locales como con una API externa en **npoint**.
-
-Si desea probar el proyecto utilizando la base de datos local en lugar de los archivos remotos, debe realizar los siguientes cambios en el archivo `js/app.js`:
-
-1. **Médicos (Línea 19):** Cambiar: `https://api.npoint.io/7f60b9b215db1d2758b9`
-   Por: `../data/medicos.json`
-
-2. **Turnos (Línea 45):** Cambiar: `https://api.npoint.io/b3fbea70a626a9de9ec0`
-   Por: `../data/turnos.json`
-
----
 
 ## 🚀 Funcionalidades Principales
 
